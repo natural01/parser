@@ -1,0 +1,7 @@
+{
+    "require": {
+        "ext-iconv": "*",
+        "ext-curl": "*",
+        "ext-json": "*"
+    }
+}
