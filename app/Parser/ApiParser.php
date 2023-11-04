@@ -36,4 +36,5 @@ abstract class ApiParser implements Parser
     }
 
     abstract function parse();
+    abstract function getHotels();
 }

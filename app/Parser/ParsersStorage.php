@@ -17,4 +17,8 @@ class ParsersStorage
             }
         }
     }
+    public function getParsers()
+    {
+        return $this->parsers;
+    }
 }

@@ -2,7 +2,7 @@
 
 class OstrovokParser extends ApiParser
 {
-    private string $baseUrl = "https://ostrovok.ru";
+    public string $baseUrl = "https://ostrovok.ru";
     private string $url;
     private int $countHotelsReceived = 100;
     private int $page = 1;
@@ -32,13 +32,18 @@ class OstrovokParser extends ApiParser
                     $value->static_vm->rating->total,
                     $this->getImgUrl($value->static_vm->images[0]->tmpl),
                     0,
-                    $this->getHotelUrl($value)
+                    $this->getHotelUrl($value),
+                    $value->rates[0]->payment_options->payment_types[0]->amount
                 );
             }
             $this->page++;
         }
         $this->page = 0;
-        print_r($this->hotels);
+    }
+
+    public function getHotels()
+    {
+        return $this->hotels;
     }
 
     private function uuidGenerate()

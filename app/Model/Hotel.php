@@ -2,15 +2,17 @@
 
 class Hotel
 {
-    protected string $name;
-    protected string $address;
-    protected int $grade;
-    protected string $imgSrc;
-    protected string $postingDate;
-    protected string $hotelSrc;
+    public string $name;
+    public string $address;
+    public int $grade;
+    public string $imgSrc;
+    public int $postingDate;
+    public string $hotelSrc;
+    public int $price;
 
     public function __construct(string $name, string $address, int $grade,
-                                string $imgSrc, int $postingDate, string $hotelSrc)
+                                string $imgSrc, int $postingDate, string $hotelSrc,
+                                int $price)
     {
         $this->name = $name;
         $this->address = $address;
@@ -18,5 +20,6 @@ class Hotel
         $this->imgSrc = $imgSrc;
         $this->postingDate = $postingDate;
         $this->hotelSrc = $hotelSrc;
+        $this->price = $price;
     }
 }

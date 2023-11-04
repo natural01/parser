@@ -4,7 +4,7 @@ require 'app/Parser/ApiParser.php';
 
 class BronevikParser extends ApiParser
 {
-    private string $baseUrl = "https://bronevik.com";
+    public string $baseUrl = "https://bronevik.com";
     private string $url;
     private int $countHotelsReceived = 100;
     private int $cityId = 48;
@@ -26,9 +26,14 @@ class BronevikParser extends ApiParser
                 $value->reviews->rating,
                 $this->baseUrl . $value->dossier->photos[0],
                 !empty($value->lastBookingMinutes) ? $value->lastBookingMinutes : 0,
-                $this->baseUrl . $value->dossier->url
+                $this->baseUrl . $value->dossier->url,
+                $value->offers[0]->pricing->gross
             );
         }
-        print_r($this->hotels);
+    }
+
+    public function getHotels()
+    {
+        return $this->hotels;
     }
 }
