@@ -8,11 +8,11 @@ class Hotel
     public string $imgSrc;
     public int $postingDate;
     public string $hotelSrc;
-    public int $price;
+    public string $price;
 
     public function __construct(string $name, string $address, int $grade,
                                 string $imgSrc, int $postingDate, string $hotelSrc,
-                                int $price)
+                                string $price)
     {
         $this->name = $name;
         $this->address = $address;

@@ -19,40 +19,42 @@ $parsers->parse();
 
 $db = new DataBase();
 
-//$hotels = [];
-//$prices = [];
-//$result = $db->getAllHotels();
-//while ($row = $result->fetch_assoc())
-//    $hotels[] = $row["name"];
-//$result = $db->getAllPrice();
-//while ($row = $result->fetch_assoc())
-//    if (!in_array($row["site"], $prices))
-//    {
-//        $prices[] = $row["site"];
-//    }
+$hotels = [];
+$prices = [];
+$result = $db->getAllHotels();
+while ($row = $result->fetch_assoc())
+    $hotels[] = $row["name"];
+$result = $db->getAllPrice();
+while ($row = $result->fetch_assoc())
+    if (!in_array($row["site"], $prices))
+    {
+        $prices[] = $row["site"];
+    }
 
 foreach ($parsers->getParsers() as $parser)
 {
-//    $sitesUrl = "";
-//    $isSiteChecked = true;
-//    if (!in_array($parser->baseUrl, $prices))
-//    {
-//        $isSiteChecked = false;
-//        $sitesUrl = $parser->baseUrl;
-//        $hotels[] = $sitesUrl;
-//    }
+    $sitesUrl = "";
+    $isSiteChecked = true;
+    if (!in_array($parser->baseUrl, $prices))
+    {
+        $isSiteChecked = false;
+        $sitesUrl = $parser->baseUrl;
+        $hotels[] = $sitesUrl;
+    }
     foreach ($parser->getHotels() as $hotel)
     {
-        echo $hotel[0]->name . " " . $hotel[0]->price . PHP_EOL;
-//        if (!in_array($hotel[0]->name, $hotels))
-//        {
-//            $db->addHotel($hotel[0]);
-//            $hotels[] = $hotel[0]->name;
-//        }
-//        if(!$isSiteChecked)
-//        {
-//            $db->addPrice($sitesUrl, $hotel[0]);
-//        }
+        var_dump($hotel);
+//        echo $hotel[0]->name . " " . $hotel[0]->price . PHP_EOL;
+
+        if (!in_array($hotel[0]->name, $hotels))
+        {
+            $db->addHotel($hotel[0]);
+            $hotels[] = $hotel[0]->name;
+        }
+        if(!$isSiteChecked)
+        {
+            $db->addPrice($sitesUrl, $hotel[0]);
+        }
     }
-//    $isSiteChecked = true;
+    $isSiteChecked = true;
 }

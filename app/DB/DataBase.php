@@ -29,7 +29,7 @@ class DataBase
         $site = $baseUrl;
         $name = $hotel->name;
         $price = $hotel->price;
-        $this->db->query("INSERT INTO `price` (`name`, `site`, `price`) VALUES ('$name', '$site', $price)");
+        $this->db->query("INSERT INTO `price` (`name`, `site`, `price`) VALUES ('$name', '$site', '$price')");
     }
 
     public function deletePrice($name)
@@ -49,13 +49,13 @@ class DataBase
 
     public function addHotel($hotel)
     {
-        $name = $hotel->name;
-        $address = $hotel->address;
+        $name = str_replace('"', '\'', $hotel->name);
+        $address = str_replace('"', '\'', $hotel->address);
         $grade = $hotel->grade;
         $imgSrc = $hotel->imgSrc;
         $postingDate = $hotel->postingDate;
         $hotelSrc = $hotel->hotelSrc;
-        $this->db->query("INSERT INTO `hotel` (`name`, `address`, `grade`, `imgSrc`, `postingDate`, `hotelSrc`) VALUES ('$name', '$address', $grade, '$imgSrc', $postingDate, '$hotelSrc')");
+        $this->db->query("INSERT INTO `hotel` (`name`, `address`, `grade`, `imgSrc`, `postingDate`, `hotelSrc`) VALUES (\"$name\", \"$address\", $grade, \"$imgSrc\", $postingDate, \"$hotelSrc\")");
     }
 
     public function deleteHotel($name)
