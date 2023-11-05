@@ -21,20 +21,22 @@ class DataBase
 
     public function getPriceByName($name)
     {
-        return $this->db->query("SELECT * FROM `price` WHERE `name` = '$name'");
+        $name = str_replace('"', '\'', $name);
+        return $this->db->query("SELECT * FROM `price` WHERE `name` = \"$name\"");
     }
 
-    public function addPrice($baseUrl, $hotel)
+    public function addPrice($baseUrl, &$hotel)
     {
         $site = $baseUrl;
-        $name = $hotel->name;
-        $price = $hotel->price;
-        $this->db->query("INSERT INTO `price` (`name`, `site`, `price`) VALUES ('$name', '$site', '$price')");
+        $name = str_replace('"', '\'', $hotel->name);
+        $price = str_replace('"', '\'', $hotel->price);
+        $this->db->query("INSERT INTO `price` (`name`, `site`, `price`) VALUES (\"$name\", \"$site\", \"$price\")");
     }
 
     public function deletePrice($name)
     {
-        $this->db->query("DELETE FROM `price` WHERE `name` = '$name'");
+        $updatedName = str_replace('"', '\'', $name);
+        $this->db->query("DELETE FROM `price` WHERE `name` = \"$updatedName\"");
     }
 
     public function getAllHotels()
@@ -44,7 +46,8 @@ class DataBase
 
     public function getHotelByName($name)
     {
-        return $this->db->query("SELECT * FROM `hotel` WHERE `name` = '$name'");
+        $updatedName = str_replace('"', '\'', $name);
+        return $this->db->query("SELECT * FROM `hotel` WHERE `name` = \"$updatedName\"");
     }
 
     public function addHotel($hotel)
@@ -60,6 +63,7 @@ class DataBase
 
     public function deleteHotel($name)
     {
-        $this->db->query("DELETE FROM `hotel` WHERE `name` = '$name'");
+        $updatedName = str_replace('"', '\'', $name);
+        $this->db->query("DELETE FROM `hotel` WHERE `name` = \"$updatedName\"");
     }
 }

@@ -6,11 +6,11 @@ require 'app/Parser/SiteParser/OstrovokParser.php';
 require 'app/Parser/ParsersStorage.php';
 require 'app/DB/DataBase.php';
 
-//$dateStart = $argv[1]; // example: "2023-12-01"
-//$dateFinish = $argv[2]; // example: "2023-12-02"
+$dateStart = $argv[1]; // example: "2023-12-01"
+$dateFinish = $argv[2]; // example: "2023-12-02"
 
-$bronevikParser = new BronevikParser("2023-12-01", "2023-12-02");
-$ostrovokParser = new OstrovokParser("2023-12-01", "2023-12-02");
+$bronevikParser = new BronevikParser($dateStart, $dateFinish);
+$ostrovokParser = new OstrovokParser($dateStart, $dateFinish);
 
 $parsers = new ParsersStorage();
 $parsers->addParser($bronevikParser);
@@ -43,9 +43,6 @@ foreach ($parsers->getParsers() as $parser)
     }
     foreach ($parser->getHotels() as $hotel)
     {
-        var_dump($hotel);
-//        echo $hotel[0]->name . " " . $hotel[0]->price . PHP_EOL;
-
         if (!in_array($hotel[0]->name, $hotels))
         {
             $db->addHotel($hotel[0]);
@@ -54,7 +51,31 @@ foreach ($parsers->getParsers() as $parser)
         if(!$isSiteChecked)
         {
             $db->addPrice($sitesUrl, $hotel[0]);
+            $prices[] = $parser->baseUrl;
         }
     }
     $isSiteChecked = true;
 }
+
+require "app/Blocks/Header.php";
+
+$prices = [];
+$result = $db->getAllPrice();
+while ($row = $result->fetch_assoc())
+    $prices[] = $row;
+
+foreach ($hotels as $hotel)
+{
+    echo "<b>$hotel</b><ul>";
+    $result = $db->getPriceByName($hotel);
+    while ($row = $result->fetch_assoc())
+    {
+        $name = $row["name"];
+        $site = $row["site"];
+        $price = $row["price"];
+        echo "<li>$price in site: $site</li>";
+    }
+    echo "</ul>";
+}
+
+require "app/Blocks/Footer.php";
